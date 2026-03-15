@@ -31,12 +31,16 @@ def countClicks(teclas):
     global contClicks, antis
     click = contClicks
     contClicks += 1
-    if antis == teclas:
-        antis = teclas
+    if antis == teclas and timer(time()):
         if contClicks < len(teclas):
             return click, True
         else:
             contClicks = 0
+            return click, True
+    elif antis == teclas and timer(time()) == False:
+            contClicks = 0
+            click = contClicks
+            contClicks += 1
             return click, True
     else:
         antis = teclas
@@ -50,11 +54,11 @@ def addTeclas(teclas):
     global listap
     click, ant = countClicks(teclas)
     click  = teclas[click]
-    if timer(time()) and ant == True:
-            return saida.set(listap + click)
-    elif timer(time()) and ant == False:
-        listap = saida.get()
+    if timer(time()) == True and ant == True:
         return saida.set(listap + click)
+    elif timer(time()) == True and ant == False:
+        listap = saida.get()
+        return saida.set(listap + click)  
     else:
         listap = saida.get()
         return saida.set(listap + click)
